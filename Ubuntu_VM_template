@@ -11,13 +11,6 @@ virt-customize -a jammy-server-cloudimg-amd64.img --run-command "useradd -m -s /
 virt-customize -a jammy-server-cloudimg-amd64.img --password myuser:file:password_myuser.txt
 # Delete temporary password files safely.
 shred -uv password_root.txt password_myuser.txt
-# Optional: Install fish shell.
-virt-customize -a jammy-server-cloudimg-amd64.img --run-command "apt-add-repository ppa:fish-shell/release-3 --yes"
-virt-customize -a jammy-server-cloudimg-amd64.img --install fish
-virt-customize -a jammy-server-cloudimg-amd64.img --run-command "chsh -s /usr/bin/fish myuser"
-# Finally, update all packages in the image.
-virt-customize -a jammy-server-cloudimg-amd64.img --update
-
 # Next, we create a Proxmox VM template.
 # Change values for your bridge and storage and change defaults to your liking.
 qm create 777 --name "ubuntu-20.04-template" --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
